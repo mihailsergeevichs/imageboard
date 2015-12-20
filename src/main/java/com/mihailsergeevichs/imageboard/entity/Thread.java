@@ -15,7 +15,7 @@ public class Thread extends BaseEntity<Long> {
     @Column(name = "THEME", length = 55, nullable = true)
     private String theme;
 
-    
+
 
     @ManyToOne
     private Board board;
