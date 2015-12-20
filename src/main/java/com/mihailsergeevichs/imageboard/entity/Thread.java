@@ -6,6 +6,8 @@ import java.util.Set;
 /**
  * Created by Overlord on 20.12.2015.
  */
+@Entity
+@Table(name = "THREAD")
 public class Thread extends BaseEntity<Long> {
 
     @Id
