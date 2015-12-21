@@ -1,5 +1,9 @@
 package com.mihailsergeevichs.imageboard.entity;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,6 +13,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "POST")
 public class Post extends BaseEntity<Long> {
+
+
+
+
+    @Column(name = "CREATED", nullable = false)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime created;
 
 
     @Override

@@ -1,5 +1,8 @@
 package com.mihailsergeevichs.imageboard.entity;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,8 +19,6 @@ public class Thread extends BaseEntity<Long> {
 
     @Column(name = "THEME", length = 55, nullable = true)
     private String theme;
-
-
 
     @ManyToOne
     private Board board;
