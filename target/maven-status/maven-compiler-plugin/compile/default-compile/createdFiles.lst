@@ -4,4 +4,5 @@ com\mihailsergeevichs\imageboard\ImageboardApplication.class
 com\mihailsergeevichs\imageboard\entity\Post.class
 com\mihailsergeevichs\imageboard\entity\BaseEntity.class
 com\mihailsergeevichs\imageboard\entity\Board.class
+com\mihailsergeevichs\imageboard\config\MvcConfiguration.class
 com\mihailsergeevichs\imageboard\controller\IndexController.class
