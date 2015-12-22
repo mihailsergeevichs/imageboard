@@ -1,9 +1,7 @@
 package com.mihailsergeevichs.imageboard.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,33 +16,33 @@ public class Board extends BaseEntity<Long> {
     private Long id;
 
     @Column(name = "BOARDNAME", nullable = false)
-    private String boardName;
+    private String boardId;
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "board")
-    private List<Thread> threads;
+    private Set<Thread> threads;
 
     public Board(){}
 
-    public Board(String boardName, String description){
-        this.boardName = boardName;
+    public Board(String boardId, String description){
+        this.boardId = boardId;
         this.description = description;
-        threads = new ArrayList<>(50);
+        threads = new HashSet<>(50);
     }
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
-    public String getBoardName() {
-        return boardName;
+    public String getBoardId() {
+        return boardId;
     }
 
-    public void setBoardName(String boardName) {
-        this.boardName = boardName;
+    public void setBoardId(String boardId) {
+        this.boardId = boardId;
     }
 
     public String getDescription() {
@@ -55,11 +53,11 @@ public class Board extends BaseEntity<Long> {
         this.description = description;
     }
 
-    public List<Thread> getThreads() {
+    public Set<Thread> getThreads() {
         return threads;
     }
 
-    public void setThreads(List<Thread> threads) {
+    public void setThreads(Set<Thread> threads) {
         this.threads = threads;
     }
 
@@ -67,7 +65,7 @@ public class Board extends BaseEntity<Long> {
     public String toString() {
         return "Board{" +
                 "id=" + id +
-                ", boardName='" + boardName + '\'' +
+                ", boardId='" + boardId + '\'' +
                 ", description='" + description + '\'' +
                 ", with " + threads.size() +  " threads" +  +
                 '}';
