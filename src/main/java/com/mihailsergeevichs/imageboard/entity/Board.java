@@ -21,7 +21,7 @@ public class Board extends BaseEntity<Long> {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "board")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "board")
     private Set<Thread> threads;
 
     public Board(){}
