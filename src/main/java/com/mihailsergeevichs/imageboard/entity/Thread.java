@@ -18,7 +18,7 @@ public class Thread extends BaseEntity<Long> {
     @Column(name = "THEME", length = 55, nullable = true)
     private String theme;
 
-    @Column(name = "OPPOST", nullable = false)
+    @Embedded
     private Post opPost;
 
     @ManyToOne
