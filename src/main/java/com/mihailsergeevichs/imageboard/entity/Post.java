@@ -26,6 +26,9 @@ public class Post extends BaseEntity<Long> {
     @Column(name = "AUTHOR")
     private String author;
 
+    @Column(name = "THEME", length = 55, nullable = true)
+    private String theme;
+
     @Lob
     @Column(name = "TEXT")
     private String text;
@@ -38,10 +41,11 @@ public class Post extends BaseEntity<Long> {
         return id;
     }
 
-    public Post(DateTime created, boolean sage, String author, String text, Thread thread) {
+    public Post(DateTime created, boolean sage, String author, String theme, String text, Thread thread) {
         this.created = created;
         this.sage = sage;
         this.author = author;
+        this.theme = theme;
         this.text = text;
         this.thread = thread;
         if(author == null){
@@ -54,6 +58,7 @@ public class Post extends BaseEntity<Long> {
         return "Post{" +
                 "id=" + id +
                 ", created=" + created +
+                ", created=" + theme +
                 ", sage=" + sage +
                 ", author='" + author + '\'' +
                 ", text='" + text.length() + '\'' +
@@ -75,6 +80,7 @@ public class Post extends BaseEntity<Long> {
         if (!getId().equals(post.getId())) return false;
         if (!getCreated().equals(post.getCreated())) return false;
         if (!getAuthor().equals(post.getAuthor())) return false;
+        if (!getTheme().equals(post.getTheme())) return false;
         if (!getText().equals(post.getText())) return false;
         return getThread().equals(post.getThread());
 
@@ -86,9 +92,18 @@ public class Post extends BaseEntity<Long> {
         result = 31 * result + getCreated().hashCode();
         result = 31 * result + (isSage() ? 1 : 0);
         result = 31 * result + getAuthor().hashCode();
+        result = 31 * result + getTheme().hashCode();
         result = 31 * result + getText().hashCode();
         result = 31 * result + getThread().hashCode();
         return result;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public DateTime getCreated() {
