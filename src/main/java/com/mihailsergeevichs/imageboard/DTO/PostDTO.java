@@ -15,7 +15,7 @@ public class PostDTO {
     @Length(min = 1, max = 2500)
     private String text;
 
-    @Length(max = 55)
+    @Length(max = 55 )
     private String theme;
 
     public PostDTO(String author, boolean sage, String text, String theme) {
