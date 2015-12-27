@@ -12,7 +12,7 @@ public class PostDTO {
 
     private boolean sage;
 
-    @Length(min = 1, max = 2500)
+    @Length(min = 1, max = 2500, message = "Post should be not empty and less than 2500 characters.")
     private String text;
 
     @Length(max = 55 )

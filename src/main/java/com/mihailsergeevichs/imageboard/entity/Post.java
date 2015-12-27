@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 /**
  * Created by Overlord on 20.12.2015.
@@ -29,9 +30,12 @@ public class Post extends BaseEntity<Long> {
     @Column(name = "THEME", length = 55, nullable = true)
     private String theme;
 
-    @Lob
-    @Column(name = "TEXT")
+    @Column(name = "TEXT", nullable = false)
     private String text;
+
+    @Lob
+    @Column(name = "IMAGE")
+    private byte[] image;
 
     @ManyToOne
     private Thread thread;
@@ -41,12 +45,13 @@ public class Post extends BaseEntity<Long> {
         return id;
     }
 
-    public Post(DateTime created, boolean sage, String author, String theme, String text, Thread thread) {
+    public Post(DateTime created, boolean sage, String author, String theme, String text, byte[] image, Thread thread) {
         this.created = created;
         this.sage = sage;
         this.author = author;
         this.theme = theme;
         this.text = text;
+        this.image = image;
         this.thread = thread;
         if(author == null){
             author = "Anonymous";
@@ -58,10 +63,11 @@ public class Post extends BaseEntity<Long> {
         return "Post{" +
                 "id=" + id +
                 ", created=" + created +
-                ", created=" + theme +
                 ", sage=" + sage +
                 ", author='" + author + '\'' +
+                ", theme='" + theme + '\'' +
                 ", text='" + text.length() + '\'' +
+                ", image=" + image.length +
                 ", thread=" + thread.getId() +
                 '}';
     }
@@ -82,6 +88,7 @@ public class Post extends BaseEntity<Long> {
         if (!getAuthor().equals(post.getAuthor())) return false;
         if (!getTheme().equals(post.getTheme())) return false;
         if (!getText().equals(post.getText())) return false;
+        if (!Arrays.equals(image, post.image)) return false;
         return getThread().equals(post.getThread());
 
     }
@@ -94,6 +101,7 @@ public class Post extends BaseEntity<Long> {
         result = 31 * result + getAuthor().hashCode();
         result = 31 * result + getTheme().hashCode();
         result = 31 * result + getText().hashCode();
+        result = 31 * result + Arrays.hashCode(image);
         result = 31 * result + getThread().hashCode();
         return result;
     }
@@ -136,6 +144,14 @@ public class Post extends BaseEntity<Long> {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Thread getThread() {
