@@ -17,9 +17,9 @@ public class Post extends BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CREATED", nullable = false)
+    @Column(name = "POSTED", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime created;
+    private DateTime posted;
 
     @Column(name = "SAGE")
     private boolean sage;
@@ -45,8 +45,8 @@ public class Post extends BaseEntity<Long> {
         return id;
     }
 
-    public Post(DateTime created, boolean sage, String author, String theme, String text, byte[] image, Thread thread) {
-        this.created = created;
+    public Post(DateTime posted, boolean sage, String author, String theme, String text, byte[] image, Thread thread) {
+        this.posted = posted;
         this.sage = sage;
         this.author = author;
         this.theme = theme;
@@ -62,7 +62,7 @@ public class Post extends BaseEntity<Long> {
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", created=" + created +
+                ", posted=" + posted +
                 ", sage=" + sage +
                 ", author='" + author + '\'' +
                 ", theme='" + theme + '\'' +
@@ -115,11 +115,11 @@ public class Post extends BaseEntity<Long> {
     }
 
     public DateTime getCreated() {
-        return created;
+        return posted;
     }
 
-    public void setCreated(DateTime created) {
-        this.created = created;
+    public void setCreated(DateTime posted) {
+        this.posted = posted;
     }
 
     public boolean isSage() {

@@ -1,7 +1,8 @@
 package com.mihailsergeevichs.imageboard.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,18 +16,14 @@ public class Thread extends BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Embedded
-    private Post opPost;
-
     @ManyToOne
     private Board board;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "thread")
-    private Set<Post> posts;
+    private List<Post> posts;
 
-    public Thread(String theme, Post opPost) {
-        this.opPost = opPost;
-        posts = new HashSet<>(500);
+    public Thread(String theme) {
+        posts = new LinkedList<>();
     }
 
     public Thread() {
@@ -36,7 +33,6 @@ public class Thread extends BaseEntity<Long> {
     public String toString() {
         return "Thread{" +
                 "id=" + id +
-                ", opPost=" + opPost.getId() +
                 ", board=" + board.getBoardId() +
                 ", posts=" + posts.size() +
                 '}';
@@ -50,7 +46,6 @@ public class Thread extends BaseEntity<Long> {
         Thread thread = (Thread) o;
 
         if (!getId().equals(thread.getId())) return false;
-        if (!getOpPost().equals(thread.getOpPost())) return false;
         if (!getBoard().equals(thread.getBoard())) return false;
         return getPosts().equals(thread.getPosts());
 
@@ -59,7 +54,6 @@ public class Thread extends BaseEntity<Long> {
     @Override
     public int hashCode() {
         int result = getId().hashCode();
-        result = 31 * result + getOpPost().hashCode();
         result = 31 * result + getBoard().hashCode();
         result = 31 * result + getPosts().hashCode();
         return result;
@@ -69,15 +63,7 @@ public class Thread extends BaseEntity<Long> {
     public Long getId() {
         return id;
     }
-
-    public Post getOpPost() {
-        return opPost;
-    }
-
-    public void setOpPost(Post opPost) {
-        this.opPost = opPost;
-    }
-
+    
     public Board getBoard() {
         return board;
     }
@@ -86,11 +72,11 @@ public class Thread extends BaseEntity<Long> {
         this.board = board;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 }

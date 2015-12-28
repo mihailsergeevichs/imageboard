@@ -3,6 +3,7 @@ package com.mihailsergeevichs.imageboard.config;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -12,6 +13,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  */
 @Configuration
 @PropertySource("classpath:application.properties")
+@Import({Persistence.class})
 public class ApplicationContext {
 
     private static final String MESSAGE_SOURCE_BASE_NAME = "i18n/messages";

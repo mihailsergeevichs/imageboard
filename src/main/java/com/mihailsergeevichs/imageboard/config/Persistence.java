@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -24,8 +25,11 @@ import java.util.Properties;
 public class Persistence {
 
     private static final String[] ENTITY_PACKAGES = {
-            "com.mihailsergeevichs.imageboard.entities"
+            "com.mihailsergeevichs.imageboard.entity"
     };
+
+    @Resource
+    Environment environment;
 
     private static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";
     private static final String PROPERTY_NAME_DB_PASSWORD = "db.password";
@@ -57,7 +61,7 @@ public class Persistence {
     * @param dataSource - data source as data base connection pool
     * @param environment - runtime environment of this application
      */
-    @Bean
+    @Bean(name = "entityManagerFactory")
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(DataSource dataSource, Environment environment){
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
