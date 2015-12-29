@@ -4,5 +4,7 @@ com\mihailsergeevichs\imageboard\entity\Post.class
 com\mihailsergeevichs\imageboard\entity\BaseEntity.class
 com\mihailsergeevichs\imageboard\controller\IndexController.class
 com\mihailsergeevichs\imageboard\config\Persistence.class
+com\mihailsergeevichs\imageboard\repo\BoardRepository.class
 com\mihailsergeevichs\imageboard\entity\Board.class
 com\mihailsergeevichs\imageboard\config\MvcConfiguration.class
+com\mihailsergeevichs\imageboard\repo\ThreadRepository.class

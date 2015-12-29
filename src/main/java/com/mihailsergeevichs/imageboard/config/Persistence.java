@@ -20,7 +20,7 @@ import java.util.Properties;
  * Created by Overlord on 21.12.2015.
  */
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.mihailsergeevichs.imageboard.repository"})
+@EnableJpaRepositories(basePackages = {"com.mihailsergeevichs.imageboard.repo"})
 @EnableTransactionManagement
 public class Persistence {
 
