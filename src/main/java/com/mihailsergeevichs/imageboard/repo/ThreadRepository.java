@@ -15,7 +15,7 @@ public interface ThreadRepository extends Repository<Thread, Long> {
 
     List<Thread> findAll();
 
-    Optional<Thread> findOne(Long id);
+    Thread findOne(Long id);
 
     Thread save(Thread persisted);
 

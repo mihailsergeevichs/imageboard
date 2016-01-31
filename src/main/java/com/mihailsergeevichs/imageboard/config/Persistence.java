@@ -28,9 +28,6 @@ public class Persistence {
             "com.mihailsergeevichs.imageboard.entity"
     };
 
-    @Resource
-    Environment environment;
-
     private static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";
     private static final String PROPERTY_NAME_DB_PASSWORD = "db.password";
     private static final String PROPERTY_NAME_DB_URL = "db.url";
@@ -42,70 +39,73 @@ public class Persistence {
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 
 
-    /*
-    * This method creates HikariCP DataSource as connection pool.
-    * @param environment
+    /**
+     * Creates and configures the HikariCP datasource bean.
+     * @param env   The runtime environment of  our application.
+     * @return
      */
     @Bean(destroyMethod = "close")
-    DataSource getDataSource(Environment environment){
-        HikariConfig dataSource = new HikariConfig();
-        dataSource.setDriverClassName(environment.getRequiredProperty(PROPERTY_NAME_DB_DRIVER_CLASS));
-        dataSource.setJdbcUrl(environment.getRequiredProperty(PROPERTY_NAME_DB_URL));
-        dataSource.setUsername(environment.getRequiredProperty(PROPERTY_NAME_DB_USER));
-        dataSource.setPassword(environment.getRequiredProperty(PROPERTY_NAME_DB_PASSWORD));
+    DataSource dataSource(Environment env) {
+        HikariConfig dataSourceConfig = new HikariConfig();
+        dataSourceConfig.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DB_DRIVER_CLASS));
+        dataSourceConfig.setJdbcUrl(env.getRequiredProperty(PROPERTY_NAME_DB_URL));
+        dataSourceConfig.setUsername(env.getRequiredProperty(PROPERTY_NAME_DB_USER));
+        dataSourceConfig.setPassword(env.getRequiredProperty(PROPERTY_NAME_DB_PASSWORD));
 
-        return new HikariDataSource(dataSource);
-    }
-    /*
-    * This method creates JPA entity manager factory bean.
-    * @param dataSource - data source as data base connection pool
-    * @param environment - runtime environment of this application
-     */
-    @Bean(name = "entityManagerFactory")
-    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(DataSource dataSource, Environment environment){
-        LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-
-        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
-        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        localContainerEntityManagerFactoryBean.setPackagesToScan(ENTITY_PACKAGES);
-
-        //creates temporary property object
-        Properties jpaProperties = new Properties();
-
-        //configures optimized SQL dialect for Hibernate
-        jpaProperties.put(PROPERTY_NAME_HIBERNATE_DIALECT,
-                environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
-
-        //If this value is true, hibernate will print clear log to console out
-        jpaProperties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL,
-                environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_FORMAT_SQL));
-
-        //action that invokes when hibernate started. Data base will be created and dropped at the end of application lifecycle
-        jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO,
-                environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
-
-        //configures naming strategy for hibernate when he creates new data base objects
-        jpaProperties.put(PROPERTY_NAME_HIBERNATE_NAMING_STRATEGY,
-                environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_NAMING_STRATEGY));
-
-        //if this value is true, hibernate will log all statements to console out
-        jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL,
-                environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
-
-        localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties);
-
-        return localContainerEntityManagerFactoryBean;
+        return new HikariDataSource(dataSourceConfig);
     }
 
-    /*
-    *Creates transaction manager, which will be integrated current JPA provider with spring transaction mechanism
-    *@param entityManagerFactory - current JPA transaction factory
+    /**
+     * Creates the bean that creates the JPA entity manager factory.
+     * @param dataSource    The datasource that provides the database connections.
+     * @param env           The runtime environment of  our application.
+     * @return
      */
     @Bean
-    JpaTransactionManager jpaTransactionManager(EntityManagerFactory entityManagerFactory){
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
-        return jpaTransactionManager;
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setDataSource(dataSource);
+        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        entityManagerFactoryBean.setPackagesToScan(ENTITY_PACKAGES);
+
+        Properties jpaProperties = new Properties();
+
+        //Configures the used database dialect. This allows Hibernate to create SQL
+        //that is optimized for the used database.
+        jpaProperties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
+
+        //Specifies the action that is invoked to the database when the Hibernate
+        //SessionFactory is created or closed.
+        jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
+
+        //Configures the naming strategy that is used when Hibernate creates
+        //new database objects and schema elements
+        jpaProperties.put(PROPERTY_NAME_HIBERNATE_NAMING_STRATEGY, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_NAMING_STRATEGY));
+
+        //If the value of this property is true, Hibernate writes all SQL
+        //statements to the console.
+        jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+
+        //If the value of this property is true, Hibernate will use prettyprint
+        //when it writes SQL to the console.
+        jpaProperties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_FORMAT_SQL));
+
+        entityManagerFactoryBean.setJpaProperties(jpaProperties);
+
+        return entityManagerFactoryBean;
+    }
+
+    /**
+     * Creates the transaction manager bean that integrates the used JPA provider with the
+     * Spring transaction mechanism.
+     * @param entityManagerFactory  The used JPA entity manager factory.
+     * @return
+     */
+    @Bean
+    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
+        return transactionManager;
     }
 
 }

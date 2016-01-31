@@ -3,7 +3,6 @@ package com.mihailsergeevichs.imageboard.entity;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Overlord on 20.12.2015.
@@ -33,7 +32,7 @@ public class Thread extends BaseEntity<Long> {
     public String toString() {
         return "Thread{" +
                 "id=" + id +
-                ", board=" + board.getBoardId() +
+                ", board=" + board.getBoardName() +
                 ", posts=" + posts.size() +
                 '}';
     }

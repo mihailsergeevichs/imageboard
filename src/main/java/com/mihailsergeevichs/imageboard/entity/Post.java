@@ -33,9 +33,8 @@ public class Post extends BaseEntity<Long> {
     @Column(name = "TEXT", nullable = false)
     private String text;
 
-    @Lob
     @Column(name = "IMAGE")
-    private byte[] image;
+    private String image;
 
     @ManyToOne
     private Thread thread;
@@ -45,7 +44,7 @@ public class Post extends BaseEntity<Long> {
         return id;
     }
 
-    public Post(DateTime posted, boolean sage, String author, String theme, String text, byte[] image, Thread thread) {
+    public Post(DateTime posted, boolean sage, String author, String theme, String text, String image, Thread thread) {
         this.posted = posted;
         this.sage = sage;
         this.author = author;
@@ -67,7 +66,7 @@ public class Post extends BaseEntity<Long> {
                 ", author='" + author + '\'' +
                 ", theme='" + theme + '\'' +
                 ", text='" + text.length() + '\'' +
-                ", image=" + image.length +
+                ", image=" + image +
                 ", thread=" + thread.getId() +
                 '}';
     }
@@ -88,7 +87,7 @@ public class Post extends BaseEntity<Long> {
         if (!getAuthor().equals(post.getAuthor())) return false;
         if (!getTheme().equals(post.getTheme())) return false;
         if (!getText().equals(post.getText())) return false;
-        if (!Arrays.equals(image, post.image)) return false;
+        if (!getImage().equals(post.image)) return false;
         return getThread().equals(post.getThread());
 
     }
@@ -101,7 +100,7 @@ public class Post extends BaseEntity<Long> {
         result = 31 * result + getAuthor().hashCode();
         result = 31 * result + getTheme().hashCode();
         result = 31 * result + getText().hashCode();
-        result = 31 * result + Arrays.hashCode(image);
+        result = 31 * result + image.hashCode();
         result = 31 * result + getThread().hashCode();
         return result;
     }
@@ -146,11 +145,11 @@ public class Post extends BaseEntity<Long> {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

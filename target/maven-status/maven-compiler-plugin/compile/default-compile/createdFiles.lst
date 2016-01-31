@@ -1,10 +1,16 @@
 com\mihailsergeevichs\imageboard\entity\Thread.class
 com\mihailsergeevichs\imageboard\ImageboardApplication.class
 com\mihailsergeevichs\imageboard\entity\Post.class
+com\mihailsergeevichs\imageboard\service\BoardServiceImpl.class
 com\mihailsergeevichs\imageboard\entity\BaseEntity.class
+com\mihailsergeevichs\imageboard\service\ThreadService.class
+com\mihailsergeevichs\imageboard\service\ImageboardUtils.class
 com\mihailsergeevichs\imageboard\controller\IndexController.class
 com\mihailsergeevichs\imageboard\config\Persistence.class
 com\mihailsergeevichs\imageboard\repo\BoardRepository.class
 com\mihailsergeevichs\imageboard\entity\Board.class
+com\mihailsergeevichs\imageboard\service\BoardService.class
 com\mihailsergeevichs\imageboard\config\MvcConfiguration.class
 com\mihailsergeevichs\imageboard\repo\ThreadRepository.class
+com\mihailsergeevichs\imageboard\service\exception\BoardDoesNotExistsException.class
+com\mihailsergeevichs\imageboard\service\ThreadServiceImpl.class

@@ -19,4 +19,6 @@ public interface BoardRepository extends Repository<Board, Long> {
 
     Board save(Board persisted);
 
+    Board findBoardByBoardName(String boardName);
+
 }

@@ -16,7 +16,7 @@ public class Board extends BaseEntity<Long> {
     private Long id;
 
     @Column(name = "BOARDNAME", nullable = false, unique = true)
-    private String boardId;
+    private String boardName;
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
@@ -26,8 +26,8 @@ public class Board extends BaseEntity<Long> {
 
     public Board(){}
 
-    public Board(String boardId, String description){
-        this.boardId = boardId;
+    public Board(String boardName, String description){
+        this.boardName = boardName;
         this.description = description;
         threads = new LinkedList<>();
     }
@@ -37,12 +37,12 @@ public class Board extends BaseEntity<Long> {
         return id;
     }
 
-    public String getBoardId() {
-        return boardId;
+    public String getBoardName() {
+        return boardName;
     }
 
-    public void setBoardId(String boardId) {
-        this.boardId = boardId;
+    public void setBoardName(String boardName) {
+        this.boardName = boardName;
     }
 
     public String getDescription() {
@@ -65,7 +65,7 @@ public class Board extends BaseEntity<Long> {
     public String toString() {
         return "Board{" +
                 "id=" + id +
-                ", boardId='" + boardId + '\'' +
+                ", boardName='" + boardName + '\'' +
                 ", description='" + description + '\'' +
                 ", with " + threads.size() +  " threads" +  +
                 '}';
