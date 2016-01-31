@@ -1,13 +1,13 @@
 package com.mihailsergeevichs.imageboard.repo;
 
-import com.mihailsergeevichs.imageboard.entity.Board;
+import com.mihailsergeevichs.imageboard.entities.Board;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Overlord on 29.12.2015.
+ * Created by Overlord on 31.01.2016.
  */
 public interface BoardRepository extends Repository<Board, Long> {
 
@@ -15,10 +15,10 @@ public interface BoardRepository extends Repository<Board, Long> {
 
     List<Board> findAll();
 
-    Optional<Board> findOne(Long id);
+    Board findOne(Long id);
 
     Board save(Board persisted);
 
-    Board findBoardByBoardName(String boardName);
+    Board findBoardByName(String name);
 
 }
