@@ -1,4 +1,4 @@
-package com.mihailsergeevichs.imageboard.services.exception;
+package com.mihailsergeevichs.imageboard.service.exception;
 
 /**
  * Created by Overlord on 01.02.2016.

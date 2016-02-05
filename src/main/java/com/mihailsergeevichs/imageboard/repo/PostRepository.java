@@ -1,11 +1,10 @@
 package com.mihailsergeevichs.imageboard.repo;
 
-import com.mihailsergeevichs.imageboard.entities.Post;
-import com.mihailsergeevichs.imageboard.entities.Topic;
+import com.mihailsergeevichs.imageboard.entity.Post;
+import com.mihailsergeevichs.imageboard.entity.Topic;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Overlord on 31.01.2016.
@@ -20,5 +19,6 @@ public interface PostRepository extends Repository<Post, Long> {
 
     Post save(Post persisted);
 
-    List<Post> findPostsByTopic(Topic topic);
+    List<Post> findByTopic(Topic topic);
+
 }

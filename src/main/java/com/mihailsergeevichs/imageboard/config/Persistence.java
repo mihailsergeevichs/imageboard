@@ -25,7 +25,7 @@ import java.util.Properties;
 public class Persistence {
 
     private static final String[] ENTITY_PACKAGES = {
-            "com.mihailsergeevichs.imageboard.entities"
+            "com.mihailsergeevichs.imageboard.entity"
     };
 
     private static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";

@@ -1,6 +1,6 @@
-package com.mihailsergeevichs.imageboard.services;
+package com.mihailsergeevichs.imageboard.service;
 
-import com.mihailsergeevichs.imageboard.entities.Post;
+import com.mihailsergeevichs.imageboard.entity.Post;
 
 /**
  * Created by Overlord on 31.01.2016.

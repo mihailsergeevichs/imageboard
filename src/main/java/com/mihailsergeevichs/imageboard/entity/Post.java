@@ -1,17 +1,16 @@
-package com.mihailsergeevichs.imageboard.entities;
+package com.mihailsergeevichs.imageboard.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by Overlord on 31.01.2016.
  */
+@Entity
 public class Post {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long postid;
 
     private String author;
 
@@ -23,18 +22,18 @@ public class Post {
 
     private String image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Topic topic;
 
     public Post() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getPostid() {
+        return postid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostid(Long postid) {
+        this.postid = postid;
     }
 
     public String getAuthor() {
@@ -75,5 +74,13 @@ public class Post {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public boolean isSage() {
+        return sage;
+    }
+
+    public void setSage(boolean sage) {
+        this.sage = sage;
     }
 }
